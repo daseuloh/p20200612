@@ -32,6 +32,7 @@ public class BoardController {
 	private BoardDAO bDAO = null; //인터페이스 씀
 	
 	
+	
 	//127.0.0.1:800/board/getimg?no=10
 	@RequestMapping(value="/getimg")
 	public ResponseEntity<byte[]> getimg(@RequestParam("no") int no){

@@ -33,4 +33,15 @@
 	 <select id="memberList" resultType="com.example.vo.MemberVO">
 		SELECT * FROM MEMBER
 	</select>
+	
+	<delete id="deleteMemberBatch" parameterType="String">
+	DELETE FROM MEMBER WHERE USERID IN(
+	<foreach collection="array" item ="tmp" separator=",">
+		#{tmp}
+	</foreach>
+	)
+	</delete>
+	
+	
+	
   </mapper>

@@ -16,7 +16,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.example.dao.ItemDAO;
+import com.example.dao.MemberDAO;
 import com.example.vo.ItemVO;
+import com.example.vo.MemberVO;
 
 @Controller
 @RequestMapping(value ="/admin")
@@ -24,6 +26,11 @@ public class AdminController {
 	
 	@Autowired
 	private ItemDAO iDAO = null;
+	
+	@Autowired
+	private MemberDAO mDAO=null;
+	
+	
 	
 	@RequestMapping(value ="/home")
 	public String home() {
@@ -113,23 +120,15 @@ public class AdminController {
 		return "redirect:/admin/item";
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
 
-	
-	
 	
 	
 	@RequestMapping(value ="/iteminsert")
 	public String iteminsert() {
 		return "/admin/iteminsert";
 	}
+	
+	
 	
 	@RequestMapping(value ="/iteminsert", method=RequestMethod.POST)
 	public String iteminsertpost(
@@ -153,6 +152,35 @@ public class AdminController {
 		
 		return "redirect:/admin/home"; //이 의미와 같음 <a href="/admin/home">자동화 </a>
 	}
+	
+	
+	
+	//admin/home->admin/member에서 체크박스로 전회원정보 불러오기
+	@RequestMapping(value="/member")
+	public String memberlist(Model model) {
+		List<MemberVO> list = mDAO.selectMemberList();
+		model.addAttribute("list", list);
+		return "/admin/member";
+	}
+	
+	
+
+	
+	//멤버 회원정보 선택 삭제
+	@RequestMapping(value="/member", method=RequestMethod.POST)
+	public String memberbatch(@RequestParam("btn") String btn,
+			RedirectAttributes redirectAttributes,
+			@RequestParam(value="chk[]", required = false) String[] userid) {
+		
+		if(btn.equals("일괄삭제")) {
+			mDAO.deleteMemberBatch(userid);
+		}
+
+		return "redirect:/admin/member";
+	}
+	
+	
+	
 	
 
 }

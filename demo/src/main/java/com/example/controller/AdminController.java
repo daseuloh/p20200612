@@ -24,6 +24,7 @@ import com.example.vo.MemberVO;
 @RequestMapping(value ="/admin")
 public class AdminController {
 	
+	//깃 테스트
 	@Autowired
 	private ItemDAO iDAO = null;
 	

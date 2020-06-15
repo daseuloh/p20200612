@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Order">
+
+<!-- map으로 리터할 경우 number가 integer로 바뀌지않음 -->
+<!--  
+	<resultMap type="map" id="ret1">
+		<result column="ITEMNO" property="ITEMNO" javaType="Integer" jdbcType="NUMERIC" />
+		<result column="ORDERCNT" property="ORDERCNT" javaType="Integer" jdbcType="NUMERIC" />
+	</resultMap>
+-->
+
+
+	<select id="selectOrderCnt" resultType ="com.example.vo.OrderVO">
+		SELECT 
+    		T1.ITEMNO, T1.ITEMNAME, T1.ITEMPRICE, T1.ITEMQTY, SUM(T1.ORDERCNT) ORDERCNT
+		FROM    
+    		(SELECT 
+        		ITEM.ITEMNO,ITEM.ITEMNAME,ITEM.ITEMPRICE,ITEM.ITEMQTY,
+        		ITEMORDER.ORDERCNT
+    		FROM 
+        		ITEM, ITEMORDER
+    		WHERE 
+        		ITEM.ITEMNO = ITEMORDER.ITEMNO) T1
+		GROUP BY 
+			T1.ITEMNO, T1.ITEMNAME, T1.ITEMPRICE, T1.ITEMQTY
+	</select>
+
+</mapper>

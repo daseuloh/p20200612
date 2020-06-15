@@ -48,6 +48,7 @@
 	
 	
 	
+	
 	<!-- update문 이전버전 -->
 <!-- 	<update id="updateItemBatch" parameterType="java.util.List">
 		UPDATE ITEM SET
@@ -114,6 +115,10 @@
 	
 	
 
+	<delete id="deleteItemOne" parameterType="int">
+		DELETE FROM ITEM WHERE ITEMNO = #{no}
+	</delete>
+	
 
 
 

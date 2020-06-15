@@ -2,6 +2,7 @@ package com.example.rest_controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.dao.ItemDAO;
+import com.example.dao.OrderDAO;
 import com.example.vo.ItemVO;
+import com.example.vo.OrderVO;
 
 @CrossOrigin("*") //CORS 해제
 @RestController
@@ -21,6 +24,29 @@ public class RestItemController {
 	
 	@Autowired
 	private ItemDAO iDAO=null;
+	
+	@Autowired
+	private OrderDAO oDAO=null;
+	
+	
+	
+	@RequestMapping(value = "/rest/itemorder.json", method = { RequestMethod.GET,
+			RequestMethod.POST }, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody HashMap<String, Object> itemOrder(){
+		
+		//map으로 리저트 타입이면 map.put("ITEMNAME": fefefe); 이런식으로 반환
+		List<OrderVO> list = oDAO.selectItemOrder();
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("ret", list);
+		
+		return map;
+
+
+		}
+		
+		
+	
+	
 	
 	//127.0.0.1:8080/rest/itemsearch.json?txt=사과&key=abc
 	@RequestMapping(value="/rest/itemsearch.json",
@@ -42,9 +68,6 @@ public class RestItemController {
 		}
 		return map;	
 	}
-	
-	
-
 	
 	
 	//127.0.0.1:8080/rest/itemone.json?no=1&key=abc

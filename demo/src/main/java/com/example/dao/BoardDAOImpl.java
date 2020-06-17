@@ -37,37 +37,42 @@ public class BoardDAOImpl implements BoardDAO{
 
 	@Override
 	public int updateBoard(BoardVO obj) {
-		// TODO Auto-generated method stub
-		return 0;
+		return sqlFactory.openSession().update("Board.updateBoardOne", obj);
 	}
 
 	@Override
 	public int deleteBoard(BoardVO obj) {
-		// TODO Auto-generated method stub
-		return 0;
+		return sqlFactory.openSession().delete("Board.deleteBoard", obj);
 	}
 
 	@Override
 	public int countBoard() {
-				
 		return sqlFactory.openSession().selectOne("Board.count");
 	}
 
 	@Override
 	public int updateHit(int no) {
 		return sqlFactory.openSession().update("Board.updateHit", no);
-		
 	}
 
 	@Override
 	public int insertBatch(List<BoardVO> list) {
 		return sqlFactory.openSession().insert("Board.insertBatch", list);
-				
 	}
 
 	@Override
 	public BoardVO selectBoardImg(int no) {
 		return sqlFactory.openSession().selectOne("Board.selectBoardImg", no);
+	}
+
+	@Override
+	public int selectBoardPrev(int no) {
+		return sqlFactory.openSession().selectOne("Board.selectBoardPrev", no);
+	}
+
+	@Override
+	public int selectBoardNext(int no) {
+		return sqlFactory.openSession().selectOne("Board.selectBoardNext", no);
 	}
 
 }

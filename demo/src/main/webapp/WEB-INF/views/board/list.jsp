@@ -13,7 +13,16 @@
 <body>
 
 	<div class="container">
-		<h4>게시판 목록</h4>
+		<div class="form-inline">
+			<div style="margin-right:30px">
+		<a href="${pageContext.request.contextPath}/board/insert" class="btn btn-success">글쓰기</a>
+		</div>
+		
+			<form action="" method="post">
+				<input type="text" class="form-control" placeholder="검색어"/>
+				<input type="submit" class="btn btn-success" value="검색어"/>
+			</form>
+		</div>
 		
 
 		

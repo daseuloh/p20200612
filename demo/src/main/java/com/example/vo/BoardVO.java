@@ -12,7 +12,17 @@ public class BoardVO {
 	private long brd_hit = 1L; //조회수 1부터 시작
 	private String brd_date=null;
 	
+	private String[] tmp = null; //관심분야, 겟셋 만들기
 	
+	
+	
+	
+	public String[] getTmp() {
+		return tmp;
+	}
+	public void setTmp(String[] tmp) {
+		this.tmp = tmp;
+	}
 	public long getBrd_no() {
 		return brd_no;
 	}

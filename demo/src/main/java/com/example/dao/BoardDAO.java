@@ -19,5 +19,9 @@ public interface BoardDAO {
 	public int insertBatch(List<BoardVO> list); //mappers는 Board.insertBatch 
 	
 	public BoardVO selectBoardImg(int no);
+	
+	public int selectBoardPrev(int no);
+	public int selectBoardNext(int no);
+	
 
 }

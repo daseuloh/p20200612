@@ -18,8 +18,19 @@
 		글작성자 : ${obj.brd_id}<br />
 		조회수 : ${obj.brd_hit}<br />
 		날짜 : ${obj.brd_date}<br />
-		<img src="/board/getimg?no=${obj.brd_no}" width="100px" height="100px" /><br />
-		<a href="/board/list" class="btn btn-success">목록</a>
+		<img src="${pageContext.request.contextPath}/board/getimg?no=${obj.brd_no}" width="100px" height="100px" /><br />
+		<hr />
+		<a href="${pageContext.request.contextPath}/board/list" class="btn btn-success">목록</a>
+		<a href="${pageContext.request.contextPath}/board/update?no=${obj.brd_no}" class="btn btn-success">수정</a>
+		<a href="${pageContext.request.contextPath}/board/delete?no=${obj.brd_no}" class="btn btn-success">삭제</a>
+		
+		<c:if test="${prev != 0}">
+		<a href="${pageContext.request.contextPath}/board/content?no=${prev}" class="btn btn-success">이전글</a>
+		</c:if>
+		
+		<c:if test="${next != 0}">
+		<a href="${pageContext.request.contextPath}/board/content?no=${next}" class="btn btn-success">다음글</a>
+		</c:if>
 	</div>
 </body>
 </html>

@@ -12,7 +12,7 @@ public interface BoardDAO {
 	public int updateBoard(BoardVO obj);
 	public int deleteBoard(BoardVO obj);
 	
-	public int countBoard(); //전체 개수 구하기
+	public int countBoard(String text); //전체 개수 구하기
 	
 	public int updateHit(int no); //글번호가 넘어오면 1 증가
 	

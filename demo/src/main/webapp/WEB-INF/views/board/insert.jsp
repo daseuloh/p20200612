@@ -11,12 +11,27 @@
 </head>
 
 <body>
-	<form action="/board/insert" method="post" enctype="multipart/form-data">
-		<input type="text" name="brd_title" placeholder="글제목" />
-		<textarea id="content" name="brd_content" placeholder="글내용"></textarea>
-		<input type="text" name="brd_id" value="${userid}" readonly />
-		<input type="file" name="imgs" />
-		<input type="submit" value="글쓰기 " />
-	</form>
+	<div class="container">
+		<div style="width:600px; padding:30px; border:1px solid #cccccc">
+			<form action="${pageContext.request.contextPath}/board/insert" method="post" enctype="multipart/form-data">
+				<div style="margin-bottom:10p
+				x">
+					<input type="text" class="form-control" name="brd_title" placeholder="글제목" />
+				</div>
+				<div style="margin-bottom:10px">
+					<textarea id="content" class="form-control" name="brd_content" placeholder="글내용"></textarea>
+				</div>
+				<div style="margin-bottom:10px">
+					<input type="text" class="form-control" name="brd_id" value="${userid}" readonly />
+				</div>
+				<div style="margin-bottom:10px">
+					<input type="file" class="form-control" name="imgs" />
+				</div>	
+				<hr />
+				<input type="submit" class="btn btn-success" value="글쓰기 " />
+			</form>
+		</div>
+	</div>
 </body>
 </html>
+

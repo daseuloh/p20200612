@@ -46,8 +46,8 @@ public class BoardDAOImpl implements BoardDAO{
 	}
 
 	@Override
-	public int countBoard() {
-		return sqlFactory.openSession().selectOne("Board.count");
+	public int countBoard(String text) {
+		return sqlFactory.openSession().selectOne("Board.count", text);
 	}
 
 	@Override

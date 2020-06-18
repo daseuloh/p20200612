@@ -2,6 +2,7 @@ package com.example.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,17 +62,20 @@ public class MemberController {
 	}
 	@RequestMapping(value="/login", method= RequestMethod.POST)
 	public String loginpost(@ModelAttribute MemberVO obj, 
-			HttpSession httpSession) {
+			HttpSession httpSession, HttpServletRequest request) {
 		//DAO로 전달
 		MemberVO obj1 = mDAO.selectMemberLogin(obj);
 		if(obj1 !=null) { //로그인 성공
 			httpSession.setAttribute("SESSION_ID", obj.getUserid());//obj 값은 이 메소드 나가면 소멸, 이 obj를 session_id에 담음, 보통 30분
 			//즉, 로그아웃하려면 세션값 삭제하면 됨
-			return "redirect:/";
+			
+			String backURL = (String) httpSession.getAttribute("CURRPAGE");
+			
+			return "redirect:" + backURL; //고정되면 안됨!! 마지막페이지로 가야됨.
 		}
 		//로그인 실패 /member/login GET방식으로 전송
 		//redirect : jsp를 보여주는게 아니고 직접 크롬에 주소를 쳐서 들어가는 방식
-		return "redirect:/member/login";
+		return "redirect:" + request.getContextPath() + "/member/login";
 	}
 	
 	

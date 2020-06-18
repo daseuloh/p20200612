@@ -29,15 +29,18 @@
 	<select id="selectList" parameterType="map" resultType="com.example.vo.BoardVO">
 		SELECT * FROM
 			(SELECT 
-				BRD_NO, BRD_TITLE, BRD_ID, BRD_HIT, BRD_DATE,
-				ROW_NUMBER() OVER (ORDER BY BRD_NO DESC) ROWN
-			 FROM
-			 	BOARD)
-			 	WHERE ROWN BETWEEN #{start} AND #{end}
+				BRD_NO, BRD_TITLE, BRD_ID, BRD_HIT, BRD_DATE, 
+				ROW_NUMBER() OVER (ORDER BY BRD_NO DESC) ROWN 
+			FROM 
+				BOARD
+			WHERE
+				BRD_TITLE LIKE '%' || #{text} || '%')
+		WHERE ROWN BETWEEN #{start} AND #{end}
 	</select>
 	
-	<select id="count" resultType="int">
+	<select id="count" resultType="int" parameterType="String">
 		SELECT COUNT(*) FROM BOARD
+		WHERE BRD_TITLE LIKE '%' || #{text} || '%'
 	</select>
 	
 	<select id="selectBoardOne" parameterType="int" resultType="com.example.vo.BoardVO">

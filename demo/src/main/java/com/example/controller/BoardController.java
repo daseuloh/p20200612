@@ -44,18 +44,18 @@ public class BoardController {
 			@RequestParam(value = "no", defaultValue = "0") int no) {
 		BoardVO vo = bDAO.selectBoardOne(no);
 
-		String[] check = { "java", "jstl", "spring" }; //추가한 form 태그에 적용될 코드
-		vo.setTmp(check); //추가한 form 태그에 적용될 코드
+		String[] check = { "java", "jstl", "spring" }; // 추가한 form 태그에 적용될 코드
+		vo.setTmp(check); // 추가한 form 태그에 적용될 코드
 
 		model.addAttribute("vo", vo);
 
-		List<String> selectList = new ArrayList<String>();//추가한 form 태그에 적용될 코드
-		selectList.add("java");//추가한 form 태그에 적용될 코드
-		selectList.add("jsp");//추가한 form 태그에 적용될 코드
-		selectList.add("spring");//추가한 form 태그에 적용될 코드
-		selectList.add("jstl");//추가한 form 태그에 적용될 코드
-		selectList.add("mybatis");//추가한 form 태그에 적용될 코드
-		model.addAttribute("slist", selectList);//추가한 form 태그에 적용될 코드
+		List<String> selectList = new ArrayList<String>();// 추가한 form 태그에 적용될 코드
+		selectList.add("java");// 추가한 form 태그에 적용될 코드
+		selectList.add("jsp");// 추가한 form 태그에 적용될 코드
+		selectList.add("spring");// 추가한 form 태그에 적용될 코드
+		selectList.add("jstl");// 추가한 form 태그에 적용될 코드
+		selectList.add("mybatis");// 추가한 form 태그에 적용될 코드
+		model.addAttribute("slist", selectList);// 추가한 form 태그에 적용될 코드
 
 		return "/board/update";
 	}
@@ -68,7 +68,7 @@ public class BoardController {
 		// 이미지는 수동으로 obj에 추가함
 		if (img != null) { // 이미지가 첨부되었다면
 			for (MultipartFile one : img) {
-				if(one.getSize() >0) { //첨부한 파일의 용량이 있느냐 (첨부하든 안하든 이미지사이즈는 1이 찍히기 때문)
+				if (one.getSize() > 0) { // 첨부한 파일의 용량이 있느냐 (첨부하든 안하든 이미지사이즈는 1이 찍히기 때문)
 //				if (!one.getOriginalFilename().equals("")) { // 파일명이 비어 있지 않다면
 					obj.setBrd_img(one.getBytes());
 				}
@@ -181,10 +181,10 @@ public class BoardController {
 
 		BoardVO obj = bDAO.selectBoardOne(no);
 		model.addAttribute("obj", obj); // jsp로 키가 obj인 것을 전달함
-		
-		int p = bDAO.selectBoardPrev(no); //현재 글번호 넘어가면 이전글번호가 넘어옴
+
+		int p = bDAO.selectBoardPrev(no); // 현재 글번호 넘어가면 이전글번호가 넘어옴
 		model.addAttribute("prev", p);
-		
+
 		int n = bDAO.selectBoardNext(no);
 		model.addAttribute("next", n);
 
@@ -194,27 +194,30 @@ public class BoardController {
 	// 127.0.0.1:8080/board/list
 	// 127.0.0.1:8080/board/list?page=55
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String list(Model model, HttpSession httpSeesion,
-			@RequestParam(value = "page", defaultValue = "1", required = false) int page) {
-		HashMap<String, Object> map = new HashMap<String, Object>();
+	public String list(Model model, HttpSession httpSeesion, HttpServletRequest request,
+			@RequestParam(value = "page", defaultValue = "0", required = false) int page,
+			@RequestParam(value = "text", defaultValue = "", required = false) String text) {
 
-		// page
-		// 1 -> 1, 10
-		// 2 -> 11, 20
-		map.put("start", page * 10 - 9);
-		map.put("end", page * 10);
+		if (page == 0) {
+			return "redirect:" + request.getContextPath() + "/board/list?page=1"; // 입력안해도(page=0이라도) 자동으로 page=1이 완성됨
+		}
 
 		httpSeesion.setAttribute("SESSION_BOARD_HIT_CHECK", 1);
 
 		// 목록
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		// page
+		// 1 -> 1, 10
+		// 2 -> 11, 20
+		map.put("start", page * 10 - 9); // 시작위치
+		map.put("end", page * 10); // 종료위치
+		map.put("text", text); // 검색어
 		List<BoardVO> list = bDAO.selectBoard(map);
-
-		// 개수
-		int cnt = bDAO.countBoard();
-
 		model.addAttribute("list", list);
 
-		// (int) Math.ceil(n/10.0)
+		// 게시물 개수
+		int cnt = bDAO.countBoard(text); // 검색어를 넘겨줌
+		// System.out.println((int) Math.ceil(cnt/10.0));
 		model.addAttribute("cnt", (cnt - 1) / 10 + 1);
 
 		return "/board/list";

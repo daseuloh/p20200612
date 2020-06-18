@@ -24,6 +24,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories(basePackages = {"com.example.repository"})//repository위치
 
 @ComponentScan({
+	"com.example.interceptor",
 	"com.example.controller",
 	"com.example.rest_controller",	
 	"com.example.dao"})  //controller를 찾을 수 있도록 패키지명 등록
@@ -31,6 +32,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @MapperScan({"com.example.mapper"}) //추가
 public class DemoApplication extends SpringBootServletInitializer{
 
+	
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
 		System.out.println("server start");

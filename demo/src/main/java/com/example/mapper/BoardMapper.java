@@ -7,7 +7,7 @@ import com.example.vo.BoardVO;
 
 public interface BoardMapper {
 	
-	@Delete("DELETE FROM BOARD WHERE BRD_NO = #{brd_no}") //xml역할
+	@Delete("DELETE FROM BOARD WHERE BRD_NO = #{obj.brd_no}") //xml역할
 	public int deleteBoard(@Param("obj") BoardVO obj); //dao역할, 파라메터 여러개를 넘길 수 있음
 	
 

@@ -83,13 +83,16 @@ public class BoardController {
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public String delete(HttpServletRequest request, @RequestParam(value = "no", defaultValue = "0") int no) {
 		BoardVO obj = new BoardVO();
-		obj.setBrd_no(no);
 
+
+		System.out.println(no);
+		obj.setBrd_no(no);
+			
 		// 이전방식(DAO, DAOIMPL,XML)
-//		int ret = bDAO.deleteBoard(obj);
+		int ret = bDAO.deleteBoard(obj);
 
 		// 통합형 방식 사용하기 MAPPER
-		int ret = boardMapper.deleteBoard(obj);
+//		int ret = boardMapper.deleteBoard(obj);
 
 		if (ret > 0) {// 성공시 목록화면
 			// dao_>mapper거처 삭제하고 옴. 삭제하고 나면 리스트로 보내야함
@@ -97,6 +100,7 @@ public class BoardController {
 		}
 		// 실패시 이전화면 즉, 상세화면으로
 		// 127.0.0.1:8080/board/content?no=13
+		
 		return "redirect:" + request.getContextPath() + "/board/content?no=" + no;
 	}
 

@@ -27,6 +27,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 	"com.example.interceptor",
 	"com.example.controller",
 	"com.example.rest_controller",	
+	"com.example.security",	
 	"com.example.dao"})  //controller를 찾을 수 있도록 패키지명 등록
 
 @MapperScan({"com.example.mapper"}) //추가
